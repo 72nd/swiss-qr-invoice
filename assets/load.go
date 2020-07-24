@@ -20,7 +20,7 @@ func loadFromRice(filename, description string) ([]byte, error) {
 }
 
 func riceBox() (*rice.Box, error) {
-	box, err := rice.FindBox("")
+	box, err := rice.FindBox("raw")
 	if err != nil {
 		return nil, fmt.Errorf("rice find box failed: %s", err)
 	}
