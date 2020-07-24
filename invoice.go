@@ -35,3 +35,7 @@ func (i Invoice) SaveAsPDF(path string) error {
 	return nil
 }
 
+// noPayee returns true if no fields of the payee are set
+func (i Invoice) noPayee() bool {
+	return i.PayeeName == "" && i.PayeeAddress == "" && i.PayeeZIPCode == "" && i.PayeePlace == ""
+}
