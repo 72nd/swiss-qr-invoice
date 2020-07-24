@@ -6,13 +6,15 @@ import (
 	"strings"
 	"text/template"
 
+	wrapper "github.com/72nd/gopdf-wrapper"
 	"github.com/creasty/defaults"
+	"github.com/signintech/gopdf"
 )
 
 // Invoice contains all necessary information for the generation of an invoice.
 type Invoice struct {
 	ReceiverIBAN    string `yaml:"receiver_iban" default:"CH44 3199 9123 0008 8901 2"`
-	IsQrIBAN bool `yaml:"is_qr_iban" default:"true"`
+	IsQrIBAN        bool   `yaml:"is_qr_iban" default:"true"`
 	ReceiverName    string `yaml:"receiver_name" default:"Robert Schneider AG"`
 	ReceiverStreet  string `yaml:"receiver_street" default:"Rue du Lac"`
 	ReceiverNumber  string `yaml:"receiver_number" default:"12"`
@@ -44,7 +46,32 @@ func NewInvoice(useDefaults bool) (*Invoice, error) {
 
 // SaveAsPDF generates the invoice and save it as a PDF.
 func (i Invoice) SaveAsPDF(path string) error {
-	return nil
+	doc, err := getDoc(i)
+	if err != nil {
+		return err
+	}
+	return doc.WritePdf(path)
+}
+
+// GoPdf returns the invoice as a gopdf.GoPdf element. This can be used to further
+// customizing the invoice.
+func (i Invoice) GoPdf() (*gopdf.GoPdf, error) {
+	doc, err := getDoc(i)
+	if err != nil {
+		return nil, err
+	}
+	return &doc.GoPdf, nil
+}
+
+// Doc returns the invoice as a gopdf_wrapper.Doc element. This can be used to further
+// customizing the invoice. in contrary to GoPdf() the wrapper doc has more convince
+// functions than using gopdf directly.
+func (i Invoice) Doc() (*wrapper.Doc, error) {
+	doc, err := getDoc(i)
+	if err != nil {
+		return nil, err
+	}
+	return doc, nil
 }
 
 // noPayee returns true if no fields of the payee are set
