@@ -27,7 +27,7 @@ type Invoice struct {
 	PayeeCountry    string `yaml:"payee_country" default:"CH"`
 	Reference       string `yaml:"reference" default:"21 00000 00003 13947 14300 09017"`
 	AdditionalInfo  string `yaml:"additional_info" default:"Rechnung Nr. 3139 für Gartenarbeiten"`
-	Amount          string `yaml:"amount" default:"3949.75"`
+	Amount          string `yaml:"amount" default:"3 949.75"`
 	Currency        string `yaml:"currency" default:"CHF"`
 }
 
