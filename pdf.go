@@ -56,7 +56,7 @@ func renderBasics(doc *wrapper.Doc) error {
 		return err
 	}
 	img, err := gopdf.ImageHolderByBytes(scissors)
-	doc.ImageByHolder(img, 59.5, yTop+10, nil)
+	doc.ImageByHolder(img, 60.25, yTop+10, &gopdf.Rect{W: 3.5, H: 5.8})
 	return err
 }
 
