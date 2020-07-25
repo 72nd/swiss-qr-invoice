@@ -1,7 +1,71 @@
 package main
 
-import "fmt"
+import (
+	"os"
+
+	invoice "github.com/72nd/swiss-qr-invoice"
+	"github.com/sirupsen/logrus"
+	"github.com/urfave/cli/v2"
+)
 
 func main() {
-	fmt.Printf("hello")
+	app := &cli.App{
+		Name:  "incoive-cli",
+		Usage: "create swiss QR-Code invoices as PDF",
+		Action: func(c *cli.Context) error {
+			_ = cli.ShowCommandHelp(c, c.Command.Name)
+			return nil
+		},
+		Commands: []*cli.Command{
+			{
+				Name:  "create",
+				Usage: "generate PDF invoice based on `FILE`",
+				Flags: []cli.Flag{
+					&cli.StringFlag{
+						Name:    "input",
+						Aliases: []string{"i"},
+						Usage:   "path to input config file"},
+					&cli.StringFlag{
+						Name:    "output",
+						Aliases: []string{"o"},
+						Usage:   "destination path for PDF invoice"},
+				},
+				Action: func(c *cli.Context) error {
+					if c.String("input") == "" {
+						logrus.Fatal("please specify the input file with the -i flag")
+					}
+					if c.String("output") == "" {
+						logrus.Fatal("please specifiy the destination path for the PDF with the -i flag")
+					}
+					inv, err := invoice.OpenInvoice(c.String("input"))
+					if err != nil {
+						logrus.Fatal(err)
+					}
+					err = inv.SaveAsPDF(c.String("output"))
+					if err != nil {
+						logrus.Fatal(err)
+					}
+					return nil
+				},
+			},
+			{
+				Name:  "new",
+				Usage: "create new config file in `FILE`",
+				Action: func(c *cli.Context) error {
+					if c.Args().Len() != 1 {
+						logrus.Fatal("please specify the output file as an argument")
+					}
+					inv, err := invoice.NewInvoice(true)
+					if err != nil {
+						logrus.Fatal(err)
+					}
+					inv.Save(c.Args().First())
+					return nil
+				},
+			},
+		},
+	}
+	if err := app.Run(os.Args); err != nil {
+		logrus.Fatal("cli app error: ", err)
+	}
 }

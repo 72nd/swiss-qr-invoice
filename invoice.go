@@ -3,12 +3,14 @@ package swiss_qr_invoice
 import (
 	"bytes"
 	"fmt"
+	"io/ioutil"
 	"strings"
 	"text/template"
 
 	wrapper "github.com/72nd/gopdf-wrapper"
 	"github.com/creasty/defaults"
 	"github.com/signintech/gopdf"
+	"gopkg.in/yaml.v2"
 )
 
 // Invoice contains all necessary information for the generation of an invoice.
@@ -42,6 +44,31 @@ func NewInvoice(useDefaults bool) (*Invoice, error) {
 		}
 	}
 	return rsl, nil
+}
+
+// OpenInvoice opens a invoice config YAML file with the given path.
+func OpenInvoice(path string) (*Invoice, error) {
+	raw, err := ioutil.ReadFile(path)
+	if err != nil {
+		return nil, err
+	}
+	var inv Invoice
+	if err := yaml.Unmarshal(raw, &inv); err != nil {
+		return nil, err
+	}
+	return &inv, nil
+}
+
+// Save saves the invoice as a YAML file.
+func (i Invoice) Save(path string) error {
+	raw, err := yaml.Marshal(i)
+	if err != nil {
+		return err
+	}
+	if err := ioutil.WriteFile(path, raw, 0644); err != nil {
+		return err
+	}
+	return nil
 }
 
 // SaveAsPDF generates the invoice and save it as a PDF.
