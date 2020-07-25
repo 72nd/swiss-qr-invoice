@@ -18,7 +18,7 @@ func main() {
 		},
 		Commands: []*cli.Command{
 			{
-				Name:  "create",
+				Name:  "generate",
 				Usage: "generate PDF invoice based on `FILE`",
 				Flags: []cli.Flag{
 					&cli.StringFlag{

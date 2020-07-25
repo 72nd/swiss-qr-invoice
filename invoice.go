@@ -24,10 +24,10 @@ type Invoice struct {
 	ReceiverPlace   string `yaml:"receiver_place" default:"Biel"`
 	ReceiverCountry string `yaml:"receiver_country" default:"CH"`
 	PayeeName       string `yaml:"payee_name" default:"Pia-Maria Rutschmann-Schnyder"`
-	PayeeStreet     string `yaml:"receiver_street" default:"Grosse Marktgasse"`
-	PayeeNumber     string `yaml:"receiver_number" default:"28"`
-	PayeeZIPCode    string `yaml:"receiver_zip_code" default:"9400"`
-	PayeePlace      string `yaml:"receiver_place" default:"Rorschach"`
+	PayeeStreet     string `yaml:"payee_street" default:"Grosse Marktgasse"`
+	PayeeNumber     string `yaml:"payee_number" default:"28"`
+	PayeeZIPCode    string `yaml:"payee_zip_code" default:"9400"`
+	PayeePlace      string `yaml:"payee_place" default:"Rorschach"`
 	PayeeCountry    string `yaml:"payee_country" default:"CH"`
 	Reference       string `yaml:"reference" default:"21 00000 00003 13947 14300 09017"`
 	AdditionalInfo  string `yaml:"additional_info" default:"Rechnung Nr. 3139 für Gartenarbeiten"`
