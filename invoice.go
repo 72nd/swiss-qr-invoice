@@ -1,3 +1,4 @@
+// swiss_qr_invoice  Generate Swiss QR Invoices as described in [this standard](https://www.paymentstandards.ch/dam/downloads/ig-qr-bill-de.pdf) and [the style guide](https://www.paymentstandards.ch/dam/downloads/style-guide-de.pdf). The library uses [gopdf](https://github.com/signintech/gopdf) via the [gopdf-wrapper](https://github.com/72nd/gopdf-wrapper). 
 package swiss_qr_invoice
 
 import (
@@ -35,8 +36,8 @@ type Invoice struct {
 	Currency        string `yaml:"currency" default:"CHF"`
 }
 
-// NewInvoice returns a new invoice optional with the default values.
-func NewInvoice(useDefaults bool) (*Invoice, error) {
+// New returns a new invoice optional with the default values.
+func New(useDefaults bool) (*Invoice, error) {
 	rsl := &Invoice{}
 	if useDefaults {
 		if err := defaults.Set(rsl); err != nil {
