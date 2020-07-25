@@ -23,7 +23,7 @@ type Invoice struct {
 	ReceiverZIPCode string `yaml:"receiver_zip_code" default:"2501"`
 	ReceiverPlace   string `yaml:"receiver_place" default:"Biel"`
 	ReceiverCountry string `yaml:"receiver_country" default:"CH"`
-	PayeeName       string `yaml:"receiver_name" default:"Pia-Maria Rutschmann-Schnyder"`
+	PayeeName       string `yaml:"payee_name" default:"Pia-Maria Rutschmann-Schnyder"`
 	PayeeStreet     string `yaml:"receiver_street" default:"Grosse Marktgasse"`
 	PayeeNumber     string `yaml:"receiver_number" default:"28"`
 	PayeeZIPCode    string `yaml:"receiver_zip_code" default:"9400"`
