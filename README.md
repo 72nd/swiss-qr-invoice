@@ -1,6 +1,12 @@
 # swiss-qr-invoice
 
-Generate Swiss QR Invoices as described in [this standard](https://www.paymentstandards.ch/dam/downloads/ig-qr-bill-de.pdf) and [the style guide](https://www.paymentstandards.ch/dam/downloads/style-guide-de.pdf). The library uses [gopdf](https://github.com/signintech/gopdf) via the [gopdf-wrapper](https://github.com/72nd/gopdf-wrapper) The invoice can be directly saved as PDF or further edited using via the `gopdf-wrapper`/`gopdf` element.
+Generate Swiss QR Invoices as described in [this standard](https://www.paymentstandards.ch/dam/downloads/ig-qr-bill-de.pdf) and [the style guide](https://www.paymentstandards.ch/dam/downloads/style-guide-de.pdf). The library uses [gopdf](https://github.com/signintech/gopdf) via the [gopdf-wrapper](https://github.com/72nd/gopdf-wrapper). 
+
+## Use as a CLI app
+
+## Use as a library 
+
+The invoice can be directly saved as PDF or further edited using via the `gopdf-wrapper`/`gopdf` element.
 
 ```golang
 import inv "github.com/72nd/swiss-qr-invoice"
