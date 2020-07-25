@@ -95,9 +95,9 @@ func receivingInformation(doc *wrapper.Doc, inv Invoice) error {
 		yPayeeBase -= doc.LineHeight(6) + doc.LineHeight(8)
 	}
 	doc.AddFormattedText(5, yPayeeBase, "Zahlbar durch", 6, "bold")
-	yPayeeBase += doc.LineHeight(6)
+	yPayeeBase += doc.LineHeight(8)
 	if inv.noPayee() {
-		doc.AddText(5, yPayeeBase+doc.LineHeight(6), "not implemented")
+		emptyFields(doc, 5, yPayeeBase, 57, yPayeeBase + 20)
 		return nil
 	}
 	pyeCnt := 0.0
@@ -165,7 +165,7 @@ func paymentBasics(doc *wrapper.Doc, inv Invoice) error {
 	if err != nil {
 		return err
 	}
-	doc.ImageByHolder(crossImg, 67+19.5, yTop+17+19.5, &gopdf.Rect{W: 7, H: 7})
+	doc.ImageByHolder(crossImg, 67+19.4, yTop+17+19.4, &gopdf.Rect{W: 7.28, H: 7.28})
 
 	return nil
 }
@@ -178,6 +178,7 @@ func paymentAmount(doc *wrapper.Doc, inv Invoice) {
 	if inv.Amount != "" {
 		doc.AddSizedText(83, yAmountBase+doc.LineHeight(13), inv.Amount, 10)
 	} else {
+		emptyFields(doc, 83, yAmountBase+doc.LineHeight(13), 83+65, yAmountBase+doc.LineHeight(13) + 25)
 		doc.AddText(83, yAmountBase+doc.LineHeight(13), "not implemented")
 	}
 }
@@ -227,7 +228,7 @@ func paymentInformation(doc *wrapper.Doc, inv Invoice) error {
 	doc.AddFormattedText(118, yPayeeBase, "Zahlbar durch", 8, "bold")
 	yPayeeBase += doc.LineHeight(8)
 	if inv.noPayee() {
-		doc.AddText(118, yPayeeBase+doc.LineHeight(8), "not implemented")
+		emptyFields(doc, 118, yPayeeBase+doc.LineHeight(8), 118+65, yPayeeBase+doc.LineHeight(8) + 25)
 		return nil
 	}
 	pyeCnt := 0.0
@@ -245,5 +246,15 @@ func paymentInformation(doc *wrapper.Doc, inv Invoice) error {
 	}
 
 	return nil
+}
 
+func emptyFields(doc *wrapper.Doc, x1, y1, x2, y2 float64) {
+	doc.AddLine(x1, y1+0.125, x1+3, y1+0.125, 0.25, wrapper.SolidLine)
+	doc.AddLine(x1+0.125, y1, x1+0.125, y1+3, 0.25, wrapper.SolidLine)
+	doc.AddLine(x2, y1+0.125, x2-3, y1+0.125, 0.25, wrapper.SolidLine)
+	doc.AddLine(x2-0.125, y1, x2-0.125, y1+3, 0.25, wrapper.SolidLine)
+	doc.AddLine(x1, y2-0.125, x1+3, y2-0.125, 0.25, wrapper.SolidLine)
+	doc.AddLine(x1+0.125, y2, x1+0.125, y2-3, 0.25, wrapper.SolidLine)
+	doc.AddLine(x2, y2-0.125, x2-3, y2-0.125, 0.25, wrapper.SolidLine)
+	doc.AddLine(x2-0.125, y2, x2-0.125, y2-3, 0.25, wrapper.SolidLine)
 }
