@@ -125,7 +125,7 @@ func receivingAmount(doc *wrapper.Doc, inv Invoice) {
 	if inv.Amount != "" {
 		doc.AddSizedText(18, yAmountBase+doc.LineHeight(9), inv.Amount, 8)
 	} else {
-		emptyFields(doc, 18, yAmountBase+doc.LineHeight(9), 18+30, yAmountBase+doc.LineHeight(9)+10)
+		emptyFields(doc, 27, yAmountBase, 27+30, yAmountBase+10)
 	}
 }
 
