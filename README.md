@@ -43,4 +43,6 @@ if err := doc.WritePdf("path/to/invoice.pdf"); err != nil {
 
 ![Example 1](misc/example-01.png)
 
+It's also possible to omit the payee and/or the amount, the fields will be replaced with a rectangle field.
+
 ![Example 2](misc/example-02.png)
