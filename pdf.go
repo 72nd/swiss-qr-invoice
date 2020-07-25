@@ -125,7 +125,7 @@ func receivingAmount(doc *wrapper.Doc, inv Invoice) {
 	if inv.Amount != "" {
 		doc.AddSizedText(18, yAmountBase+doc.LineHeight(9), inv.Amount, 8)
 	} else {
-		doc.AddText(18, yAmountBase+doc.LineHeight(9), "not implemented")
+		emptyFields(doc, 18, yAmountBase+doc.LineHeight(9), 18+30, yAmountBase+doc.LineHeight(9)+10)
 	}
 }
 
@@ -178,8 +178,7 @@ func paymentAmount(doc *wrapper.Doc, inv Invoice) {
 	if inv.Amount != "" {
 		doc.AddSizedText(83, yAmountBase+doc.LineHeight(13), inv.Amount, 10)
 	} else {
-		emptyFields(doc, 83, yAmountBase+doc.LineHeight(13), 83+65, yAmountBase+doc.LineHeight(13) + 25)
-		doc.AddText(83, yAmountBase+doc.LineHeight(13), "not implemented")
+		emptyFields(doc, 77, yAmountBase+doc.LineHeight(13), 77+40, yAmountBase+doc.LineHeight(13) + 15)
 	}
 }
 

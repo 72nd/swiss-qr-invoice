@@ -42,3 +42,5 @@ if err := doc.WritePdf("path/to/invoice.pdf"); err != nil {
 ```
 
 ![Example 1](misc/example-01.png)
+
+![Example 2](misc/example-02.png)
