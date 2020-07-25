@@ -9,11 +9,11 @@ vars:
 
 tasks:
     commit:
-        summary: Run before committing to github.
+        desc: Run before committing to github.
         cmds:
             - gofmt -s -w .
     build:
-        summary: Builds the binary for multiple architectures.
+        desc: Build the binaries for multiple architectures.
         deps:
             - commit
             - build-folder
@@ -34,11 +34,11 @@ tasks:
               vars: {GOOS: "windows", GOARCH: "386"}
         silent: true
     build-folder:
-        summary: Creates the output folder for the build.
+        desc: Create the output folder for the build.
         cmds:
             - mkdir build
         generates:
-            - build
+            - build/*
     build-platform:
         summary: Build the binary for a given platform.
         cmds:
