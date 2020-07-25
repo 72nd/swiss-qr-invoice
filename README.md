@@ -1,6 +1,6 @@
 # swiss-qr-invoice
 
-[![GoDoc](https://godoc.org/github.com/sirupsen/logrus?status.svg)](https://godoc.org/github.com/sirupsen/logrus)
+[![GoDoc](https://godoc.org/github.com/72nd/swiss-qr-invoice?status.svg)](https://godoc.org/github.com/72nd/swiss-qr-invoice)
 
 Generate Swiss QR Invoices as described in [this standard](https://www.paymentstandards.ch/dam/downloads/ig-qr-bill-de.pdf) and [the style guide](https://www.paymentstandards.ch/dam/downloads/style-guide-de.pdf). The library uses [gopdf](https://github.com/signintech/gopdf) via the [gopdf-wrapper](https://github.com/72nd/gopdf-wrapper). 
 
