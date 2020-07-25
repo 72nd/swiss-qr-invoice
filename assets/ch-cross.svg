@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   shape-rendering="crispEdges"
+   height="7mm"
+   width="7mm"
+   xml:space="preserve"
+   viewBox="0 0 26.456693 26.456693"
+   y="0px"
+   x="0px"
+   id="Ebene_2"
+   version="1.1"><metadata
+   id="metadata17"><rdf:RDF><cc:Work
+       rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
+         rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title></dc:title></cc:Work></rdf:RDF></metadata><defs
+   id="defs15" />
+<style
+   id="style2"
+   type="text/css">
+	.st0{fill:#FFFFFF;}
+	.st1{fill:none;stroke:#FFFFFF;stroke-width:1.4357;stroke-miterlimit:10;}
+</style>
+
+
+
+<polygon
+   transform="matrix(1.3598365,0,0,1.3598365,-0.23403522,-0.23403522)"
+   style="fill:#000000;fill-opacity:1;stroke-width:0.73538256"
+   id="polygon4"
+   points="18.3,19.1 19.1,19.1 19.1,18.3 19.1,1.6 19.1,0.7 18.3,0.7 1.6,0.7 0.7,0.7 0.7,1.6 0.7,18.3 0.7,19.1 1.6,19.1 " /><rect
+   style="fill:#ffffff;fill-opacity:1;stroke-width:1"
+   id="rect6"
+   height="14.958201"
+   width="4.4874606"
+   class="st0"
+   y="5.2231627"
+   x="11.034758" /><rect
+   style="fill:#fffff9;fill-opacity:1;stroke-width:1"
+   id="rect8"
+   height="4.4874606"
+   width="14.958201"
+   class="st0"
+   y="10.526525"
+   x="5.7313952" /><polygon
+   transform="matrix(1.3598207,0,0,1.3598361,-0.2338788,-0.23403126)"
+   style="fill:none;stroke:#ffffff;stroke-width:1.05601561;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+   id="polygon10"
+   points="1.6,19.1 18.3,19.1 19.1,19.1 19.1,18.3 19.1,1.6 19.1,0.7 18.3,0.7 1.6,0.7 0.7,0.7 0.7,1.6 0.7,18.3 0.7,19.1 "
+   class="st1" />
+</svg>
