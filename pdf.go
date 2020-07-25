@@ -1,4 +1,4 @@
-package swiss_qr_invoice
+package swissqrinvoice
 
 import (
 	"fmt"
