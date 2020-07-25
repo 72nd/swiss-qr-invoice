@@ -35,7 +35,7 @@ func main() {
 						logrus.Fatal("please specify the input file with the -i flag")
 					}
 					if c.String("output") == "" {
-						logrus.Fatal("please specifiy the destination path for the PDF with the -i flag")
+						logrus.Fatal("please specify the destination path for the PDF with the -i flag")
 					}
 					inv, err := invoice.OpenInvoice(c.String("input"))
 					if err != nil {
@@ -55,7 +55,7 @@ func main() {
 					if c.Args().Len() != 1 {
 						logrus.Fatal("please specify the output file as an argument")
 					}
-					inv, err := invoice.NewInvoice(true)
+					inv, err := invoice.New(true)
 					if err != nil {
 						logrus.Fatal(err)
 					}
