@@ -97,7 +97,7 @@ func receivingInformation(doc *wrapper.Doc, inv Invoice) error {
 	doc.AddFormattedText(5, yPayeeBase, "Zahlbar durch", 6, "bold")
 	yPayeeBase += doc.LineHeight(8)
 	if inv.noPayee() {
-		emptyFields(doc, 5, yPayeeBase, 57, yPayeeBase + 20)
+		emptyFields(doc, 5, yPayeeBase, 57, yPayeeBase+20)
 		return nil
 	}
 	pyeCnt := 0.0
@@ -178,7 +178,7 @@ func paymentAmount(doc *wrapper.Doc, inv Invoice) {
 	if inv.Amount != "" {
 		doc.AddSizedText(83, yAmountBase+doc.LineHeight(13), inv.Amount, 10)
 	} else {
-		emptyFields(doc, 77, yAmountBase+doc.LineHeight(13), 77+40, yAmountBase+doc.LineHeight(13) + 15)
+		emptyFields(doc, 77, yAmountBase+doc.LineHeight(13), 77+40, yAmountBase+doc.LineHeight(13)+15)
 	}
 }
 
@@ -227,7 +227,7 @@ func paymentInformation(doc *wrapper.Doc, inv Invoice) error {
 	doc.AddFormattedText(118, yPayeeBase, "Zahlbar durch", 8, "bold")
 	yPayeeBase += doc.LineHeight(8)
 	if inv.noPayee() {
-		emptyFields(doc, 118, yPayeeBase+doc.LineHeight(8), 118+65, yPayeeBase+doc.LineHeight(8) + 25)
+		emptyFields(doc, 118, yPayeeBase+doc.LineHeight(8), 118+65, yPayeeBase+doc.LineHeight(8)+25)
 		return nil
 	}
 	pyeCnt := 0.0
