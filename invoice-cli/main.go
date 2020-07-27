@@ -41,8 +41,7 @@ func main() {
 					if err != nil {
 						logrus.Fatal(err)
 					}
-					err = inv.SaveAsPDF(c.String("output"))
-					if err != nil {
+					if err := inv.SaveAsPDF(c.String("output")); err != nil {
 						logrus.Fatal(err)
 					}
 					return nil
@@ -59,7 +58,40 @@ func main() {
 					if err != nil {
 						logrus.Fatal(err)
 					}
-					inv.Save(c.Args().First())
+					if err := inv.Save(c.Args().First()); err != nil {
+						logrus.Fatal(err)
+					}
+					return nil
+				},
+			},
+			{
+				Name:  "qr-debug",
+				Usage: "saves the content of the QR-Code as a text file for debugging",
+				Flags: []cli.Flag{
+					&cli.StringFlag{
+						Name:    "input",
+						Aliases: []string{"i"},
+						Usage:   "path to input config file"},
+					&cli.StringFlag{
+						Name:    "output",
+						Aliases: []string{"o"},
+						Usage:   "destination path for PDF invoice"},
+				},
+
+				Action: func(c *cli.Context) error {
+					if c.String("input") == "" {
+						logrus.Fatal("please specify the input file with the -i flag")
+					}
+					if c.String("output") == "" {
+						logrus.Fatal("please specify the destination path for the text file with the -i flag")
+					}
+					inv, err := invoice.OpenInvoice(c.String("input"))
+					if err != nil {
+						logrus.Fatal(err)
+					}
+					if err := inv.SaveQrConent(c.String("output")); err != nil {
+						logrus.Fatal(err)
+					}
 					return nil
 				},
 			},

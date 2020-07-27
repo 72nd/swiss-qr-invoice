@@ -66,10 +66,7 @@ func (i Invoice) Save(path string) error {
 	if err != nil {
 		return err
 	}
-	if err := ioutil.WriteFile(path, raw, 0644); err != nil {
-		return err
-	}
-	return nil
+	return ioutil.WriteFile(path, raw, 0644)
 }
 
 // SaveAsPDF generates the invoice and save it as a PDF.
@@ -79,6 +76,15 @@ func (i Invoice) SaveAsPDF(path string) error {
 		return err
 	}
 	return doc.WritePdf(path)
+}
+
+// SaveQrConent saves the content of the QR code to a text file for debugging.
+func (i Invoice) SaveQrConent(path string) error {
+	raw, err := i.qrContent()
+	if err != nil {
+		return err
+	}
+	return ioutil.WriteFile(path, []byte(raw), 0644)
 }
 
 // GoPdf returns the invoice as a gopdf.GoPdf element. This can be used to further
@@ -108,47 +114,53 @@ func (i Invoice) noPayee() bool {
 }
 
 func (i Invoice) qrContent() (string, error) {
-	qrTpl := `
-SPC
-0200
-1
-{{ .iban }}
-S
-{{ .inv.ReceiverName }}
-{{ .inv.ReceiverStreet }}
-{{ .inv.ReceiverNumber }}
-{{ .inv.ReceiverZIPCode }}
-{{ .inv.ReceiverPlace }}
-{{ .inv.ReceiverCountry }}
-
-
-
-
-
-
-
-{{ .inv.Amount }}
-{{ .inv.Currency }}
-S
-{{ .inv.PayeeName }}
-{{ .inv.PayeeStreet }}
-{{ .inv.PayeeNumber }}
-{{ .inv.PayeeZIPCode }}
-{{ .inv.PayeePlace }}
-{{ .inv.PayeeCountry }}
-{{ .refType }}
-{{ .inv.Reference }}
-{{ .inv.AdditionalInfo }}
+	qrTpl := `SPC\r
+0200\r
+1\r
+{{ .iban }}\r
+S\r
+{{ .inv.ReceiverName }}\r
+{{ .inv.ReceiverStreet }}\r
+{{ .inv.ReceiverNumber }}\r
+{{ .inv.ReceiverZIPCode }}\r
+{{ .inv.ReceiverPlace }}\r
+{{ .inv.ReceiverCountry }}\r
+\r
+\r
+\r
+\r
+\r
+\r
+\r
+{{ .amount }}\r
+{{ .inv.Currency }}\r
+{{ .payeeAdrType }}\r
+{{ .inv.PayeeName }}\r
+{{ .inv.PayeeStreet }}\r
+{{ .inv.PayeeNumber }}\r
+{{ .inv.PayeeZIPCode }}\r
+{{ .inv.PayeePlace }}\r
+{{ .inv.PayeeCountry }}\r
+{{ .refType }}\r
+{{ .reference }}\r
+{{ .inv.AdditionalInfo }}\r
 EPD
 `
 	refType := "QRR"
 	if !i.IsQrIBAN {
 		refType = "SCOR"
 	}
+	payeeAdrType := "S"
+	if i.noPayee() {
+		payeeAdrType = ""
+	}
 	data := map[string]interface{}{
-		"inv":     i,
-		"iban":    strings.Replace(i.ReceiverIBAN, " ", "", -1),
-		"refType": refType,
+		"inv":          i,
+		"iban":         strings.Replace(i.ReceiverIBAN, " ", "", -1),
+		"amount":       strings.Replace(i.Amount, " ", "", -1),
+		"payeeAdrType": payeeAdrType,
+		"reference":    strings.Replace(i.Reference, " ", "", -1),
+		"refType":      refType,
 	}
 	tpl, err := template.New("qr-content").Parse(qrTpl)
 	if err != nil {
@@ -158,5 +170,6 @@ EPD
 	if err := tpl.Execute(&buf, data); err != nil {
 		return "", fmt.Errorf("error while applying data to qr template: %s", err)
 	}
-	return buf.String(), nil
+	rsl := strings.Replace(buf.String(), "\\r", "\r", -1)
+	return rsl, nil
 }
