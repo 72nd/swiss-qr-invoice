@@ -15,6 +15,53 @@ const (
 	yBottom = 297.0
 )
 
+var i18n = map[string]map[string]string{
+	"de": {
+		"Zahlteil":                  "Zahlteil",
+		"Empfangsschein":            "Empfangsschein",
+		"Konto / Zahlbar an":        "Konto / Zahlbar an",
+		"Referenz":                  "Referenz",
+		"Zusätzliche Informationen": "Zusätzliche Informationen",
+		"Zahlbar durch":             "Zahlbar durch",
+		"Währung":                   "Währung",
+		"Betrag":                    "Betrag",
+		"Annahmestelle":             "Annahmestelle",
+	},
+	"fr": {
+		"Zahlteil":                  "Section paiement",
+		"Empfangsschein":            "Récépissé",
+		"Konto / Zahlbar an":        "Compte / Payable à",
+		"Referenz":                  "Référence",
+		"Zusätzliche Informationen": "Informations supplémentaires",
+		"Zahlbar durch":             "Payable par",
+		"Währung":                   "Monnaie",
+		"Betrag":                    "Montant",
+		"Annahmestelle":             "Point de dépôt",
+	},
+	"it": {
+		"Zahlteil":                  "Sezione pagamento",
+		"Empfangsschein":            "Ricevuta",
+		"Konto / Zahlbar an":        "Conto / Pagabile a",
+		"Referenz":                  "Riferimento",
+		"Zusätzliche Informationen": "Informazioni supplementari",
+		"Zahlbar durch":             "Pagabile da",
+		"Währung":                   "Valuta",
+		"Betrag":                    "Importo",
+		"Annahmestelle":             "Punto di accettazione",
+	},
+	"en": {
+		"Zahlteil":                  "Payment part",
+		"Empfangsschein":            "Receipt",
+		"Konto / Zahlbar an":        "Account / Payable to",
+		"Referenz":                  "Reference",
+		"Zusätzliche Informationen": "Additional information",
+		"Zahlbar durch":             "Payable by",
+		"Währung":                   "Currency",
+		"Betrag":                    "Amount",
+		"Annahmestelle":             "Acceptance point",
+	},
+}
+
 func getDoc(inv Invoice) (*wrapper.Doc, error) {
 	doc, err := wrapper.NewDoc(12, 1)
 	if err != nil {
@@ -61,8 +108,8 @@ func renderBasics(doc *wrapper.Doc) error {
 }
 
 func receivingInformation(doc *wrapper.Doc, inv Invoice) error {
-	doc.AddFormattedText(5, yTop+5, "Empfangsschein", 11, "bold")
-	doc.AddFormattedText(5, yTop+12, "Konto / Zahlbar an", 6, "bold")
+	doc.AddFormattedText(5, yTop+5, i18n[inv.Language]["Empfangsschein"], 11, "bold")
+	doc.AddFormattedText(5, yTop+12, i18n[inv.Language]["Konto / Zahlbar an"], 6, "bold")
 
 	yReceiverBase := yTop + 12 + doc.LineHeight(6)
 	recCnt := 0.0
@@ -86,7 +133,7 @@ func receivingInformation(doc *wrapper.Doc, inv Invoice) error {
 
 	yReferenceBase := yReceiverBase + doc.LineHeight(8)*recCnt + doc.LineHeight(9)
 	if inv.Reference != "" {
-		doc.AddFormattedText(5, yReferenceBase, "Referenz", 6, "bold")
+		doc.AddFormattedText(5, yReferenceBase, i18n[inv.Language]["Referenz"], 6, "bold")
 		doc.AddSizedText(5, yReferenceBase+doc.LineHeight(6), inv.Reference, 8)
 	}
 
@@ -94,7 +141,7 @@ func receivingInformation(doc *wrapper.Doc, inv Invoice) error {
 	if inv.Reference == "" {
 		yPayeeBase -= doc.LineHeight(6) + doc.LineHeight(8)
 	}
-	doc.AddFormattedText(5, yPayeeBase, "Zahlbar durch", 6, "bold")
+	doc.AddFormattedText(5, yPayeeBase, i18n[inv.Language]["Zahlbar durch"], 6, "bold")
 	yPayeeBase += doc.LineHeight(8)
 	if inv.noPayee() {
 		emptyFields(doc, 5, yPayeeBase, 57, yPayeeBase+20)
@@ -119,8 +166,8 @@ func receivingInformation(doc *wrapper.Doc, inv Invoice) error {
 
 func receivingAmount(doc *wrapper.Doc, inv Invoice) {
 	yAmountBase := yTop + 68
-	doc.AddFormattedText(5, yAmountBase, "Währung", 6, "bold")
-	doc.AddFormattedText(18, yAmountBase, "Betrag", 6, "bold")
+	doc.AddFormattedText(5, yAmountBase, i18n[inv.Language]["Währung"], 6, "bold")
+	doc.AddFormattedText(18, yAmountBase, i18n[inv.Language]["Betrag"], 6, "bold")
 	doc.AddSizedText(5, yAmountBase+doc.LineHeight(9), inv.Currency, 8)
 	if inv.Amount != "" {
 		doc.AddSizedText(18, yAmountBase+doc.LineHeight(9), inv.Amount, 8)
@@ -131,12 +178,12 @@ func receivingAmount(doc *wrapper.Doc, inv Invoice) {
 
 func receivingOffice(doc *wrapper.Doc, inv Invoice) {
 	yReceivingBase := yTop + 82
-	text := "Annahmestelle"
+	text := i18n[inv.Language]["Annahmestelle"]
 	doc.AddFormattedText(40.5, yReceivingBase, text, 6, "bold")
 }
 
 func paymentBasics(doc *wrapper.Doc, inv Invoice) error {
-	doc.AddFormattedText(67, yTop+5, "Zahlteil", 11, "bold")
+	doc.AddFormattedText(67, yTop+5, i18n[inv.Language]["Zahlteil"], 11, "bold")
 
 	content, err := inv.qrContent()
 	if err != nil {
@@ -172,8 +219,8 @@ func paymentBasics(doc *wrapper.Doc, inv Invoice) error {
 
 func paymentAmount(doc *wrapper.Doc, inv Invoice) {
 	yAmountBase := yTop + 68
-	doc.AddFormattedText(67, yAmountBase, "Währung", 8, "bold")
-	doc.AddFormattedText(83, yAmountBase, "Betrag", 8, "bold")
+	doc.AddFormattedText(67, yAmountBase, i18n[inv.Language]["Währung"], 8, "bold")
+	doc.AddFormattedText(83, yAmountBase, i18n[inv.Language]["Betrag"], 8, "bold")
 	doc.AddSizedText(67, yAmountBase+doc.LineHeight(13), inv.Currency, 10)
 	if inv.Amount != "" {
 		doc.AddSizedText(83, yAmountBase+doc.LineHeight(13), inv.Amount, 10)
@@ -183,7 +230,7 @@ func paymentAmount(doc *wrapper.Doc, inv Invoice) {
 }
 
 func paymentInformation(doc *wrapper.Doc, inv Invoice) error {
-	doc.AddFormattedText(118, yTop+12, "Konto / Zahlbar an", 8, "bold")
+	doc.AddFormattedText(118, yTop+12, i18n[inv.Language]["Konto / Zahlbar an"], 8, "bold")
 
 	yReceiverBase := yTop + 12 + doc.LineHeight(8)
 	recCnt := 0.0
@@ -207,7 +254,7 @@ func paymentInformation(doc *wrapper.Doc, inv Invoice) error {
 
 	yReferenceBase := yReceiverBase + doc.LineHeight(10)*recCnt + doc.LineHeight(11)
 	if inv.Reference != "" {
-		doc.AddFormattedText(118, yReferenceBase, "Referenz", 8, "bold")
+		doc.AddFormattedText(118, yReferenceBase, i18n[inv.Language]["Referenz"], 8, "bold")
 		doc.AddSizedText(118, yReferenceBase+doc.LineHeight(8), inv.Reference, 10)
 	}
 
@@ -216,7 +263,7 @@ func paymentInformation(doc *wrapper.Doc, inv Invoice) error {
 		yAdditionalBase -= doc.LineHeight(8) + doc.LineHeight(10)
 	}
 	if inv.AdditionalInfo != "" {
-		doc.AddFormattedText(118, yAdditionalBase, "Zusätzliche Informationen", 8, "bold")
+		doc.AddFormattedText(118, yAdditionalBase, i18n[inv.Language]["Zusätzliche Informationen"], 8, "bold")
 		doc.AddSizedText(118, yAdditionalBase+doc.LineHeight(8), inv.AdditionalInfo, 10)
 	}
 
@@ -224,7 +271,7 @@ func paymentInformation(doc *wrapper.Doc, inv Invoice) error {
 	if inv.AdditionalInfo == "" {
 		yPayeeBase -= doc.LineHeight(8) + doc.LineHeight(10)
 	}
-	doc.AddFormattedText(118, yPayeeBase, "Zahlbar durch", 8, "bold")
+	doc.AddFormattedText(118, yPayeeBase, i18n[inv.Language]["Zahlbar durch"], 8, "bold")
 	yPayeeBase += doc.LineHeight(8)
 	if inv.noPayee() {
 		emptyFields(doc, 118, yPayeeBase+doc.LineHeight(8), 118+65, yPayeeBase+doc.LineHeight(8)+25)
