@@ -10,7 +10,7 @@ import (
 
 func main() {
 	app := &cli.App{
-		Name:  "incoive-cli",
+		Name:  "invoice-cli",
 		Usage: "create swiss QR-Code invoices as PDF",
 		Action: func(c *cli.Context) error {
 			_ = cli.ShowCommandHelp(c, c.Command.Name)
@@ -35,7 +35,7 @@ func main() {
 						logrus.Fatal("please specify the input file with the -i flag")
 					}
 					if c.String("output") == "" {
-						logrus.Fatal("please specify the destination path for the PDF with the -i flag")
+						logrus.Fatal("please specify the destination path for the PDF with the -o flag")
 					}
 					inv, err := invoice.OpenInvoice(c.String("input"))
 					if err != nil {
@@ -83,7 +83,7 @@ func main() {
 						logrus.Fatal("please specify the input file with the -i flag")
 					}
 					if c.String("output") == "" {
-						logrus.Fatal("please specify the destination path for the text file with the -i flag")
+						logrus.Fatal("please specify the destination path for the text file with the -o flag")
 					}
 					inv, err := invoice.OpenInvoice(c.String("input"))
 					if err != nil {

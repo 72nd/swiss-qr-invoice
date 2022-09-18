@@ -6,7 +6,7 @@
   <img width="128" height="128" src="misc/icon.png">
 </p>
 
-Generate Swiss QR Invoices as described in [this standard](https://www.paymentstandards.ch/dam/downloads/ig-qr-bill-de.pdf) and [the style guide](https://www.paymentstandards.ch/dam/downloads/style-guide-de.pdf). The library uses [gopdf](https://github.com/signintech/gopdf) via the [gopdf-wrapper](https://github.com/72nd/gopdf-wrapper). 
+Generate Swiss QR Invoices as described in [this standard](https://www.paymentstandards.ch/dam/downloads/ig-qr-bill-de.pdf) and [the style guide](https://www.paymentstandards.ch/dam/downloads/style-guide-de.pdf). The library uses [gopdf](https://github.com/signintech/gopdf) via the [gopdf-wrapper](https://github.com/72nd/gopdf-wrapper).
 
 
 ## Examples
@@ -70,8 +70,10 @@ reference: 21 00000 00003 13947 14300 09017
 additional_info: Rechnung Nr. 3139 für Gartenarbeiten
 # The invoice amount, omit this if you want a empty amount field
 amount: 3 949.75
-// The currenct, can be CHF or EUR
+// The currency, can be CHF or EUR
 currency: CHF
+// The language of the invoice: de, en, fr, it
+language: de
 ```
 
 Some words about the `is_qr_iban` field: There is a special QR-Invocie IBAN associated with your account ([learn more](https://www.raiffeisen.ch/bern/de/firmenkunden/liquiditaet-und-zahlungsverkehr/harmonisierung-zahlungsverkehr/qr-rechnung/multiple-qr-iban.html)) if you don't use such a special IBAN set this field to `false`.
@@ -83,7 +85,7 @@ invoice-cli generate -i invoice.yaml -o invoice.pdf
 ```
 
 
-## Use as a library 
+## Use as a library
 
 The invoice can be directly saved as PDF or further edited using via the `gopdf-wrapper`/`gopdf` element.
 
@@ -109,6 +111,7 @@ invoice := inv.Invoice{
 	AdditionalInfo:  "Rechnung Nr. 3139 für Gartenarbeiten",
 	Amount:          "3 949.75",
 	Currency:        "CHF",
+	Language:        "de",
 }
 
 // Directly save invoice as PDF.

@@ -34,6 +34,7 @@ type Invoice struct {
 	AdditionalInfo  string `yaml:"additional_info" default:"Rechnung Nr. 3139 für Gartenarbeiten"`
 	Amount          string `yaml:"amount" default:"3 949.75"`
 	Currency        string `yaml:"currency" default:"CHF"`
+	Language        string `yaml:"language" default:"de"`
 }
 
 // New returns a new invoice optional with the default values.
